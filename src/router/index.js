@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 import EditView from '../views/EditView.vue'
 import HomeView from '../views/HomeView.vue'
 

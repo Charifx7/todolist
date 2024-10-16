@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useTodoStore } from '@/stores/todo';
 import { onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const todoStore = useTodoStore()
 const todoText = ref('')
@@ -11,27 +12,31 @@ onMounted(async () => {
 })
 
 const addTodo = async (todoText) => {
-    try{
+    try {
         await todoStore.addTodo(todoText)
         await todoStore.loadTodos()
-    }catch(error){
+    } catch (error) {
         console.log('error', error)
     }
 }
 
-const editStatus = async (todoId, todoStatus) => {
-    try{
-        await todoStore.editTodo(todoId, todo)
-    }catch(error){
+const editStatus = async (todoData, todoId) => {
+    try {
+        const updateData = {
+            name: todoData.name,
+            status: todoData.status
+        }
+        await todoStore.editTodo(updateData, todoId)
+    } catch (error) {
         console.log('error', error)
     }
 }
 
 const deleteTodo = async (todoId) => {
-    try{
+    try {
         await todoStore.deleteTodo(todoId)
         await todoStore.loadTodos()
-    }catch(error){
+    } catch (error) {
         console.log('error', error)
     }
 }
@@ -48,12 +53,14 @@ const deleteTodo = async (todoId) => {
         <ul>
             <li v-for="todo in todoStore.list">
                 {{ todo.name }}
-                <select v-model="todo.status" @change="editStatus(todo.id, todo)">
-                    <option>Select</option>
-                    <option v-for="status in todoStore.statuses" :value="status"> {{ status }}</option>
+                <select v-model="todo.status" @change="editStatus(todo.id)">
+                    <option v-for="status in todoStore.statuses" :value="status"> {{ status }}
+                    </option>
                 </select>
-                <button>Edit</button>  
-                <button @click="deleteTodo(todo.Id)">Delete</button>
+                <RouterLink :to="{ name: 'edit', params: { id: todo.id } }">
+                    <button>Edit</button>
+                </RouterLink>
+                <button @click="deleteTodo(todo.id)">Delete</button>
             </li>
         </ul>
 

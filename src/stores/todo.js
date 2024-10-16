@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-
+//https://mockapi.io/
 const BASE_URL = 'https://670b7115ac6860a6c2cc091a.mockapi.io'
 export const useTodoStore = defineStore('todo',{
   state: () => ({
@@ -40,6 +40,10 @@ export const useTodoStore = defineStore('todo',{
     },
     async editTodo (todoData, id){
       try{
+        const bodyData = {
+          name: todoData.name,
+          status: todoData.status
+        }
         const response = await axios.put(`${BASE_URL}/todos/${id}`, bodyData)
         console.log('edit complete')
       }catch(error){
@@ -51,7 +55,7 @@ export const useTodoStore = defineStore('todo',{
         const response = await axios.delete(`${BASE_URL}/todos/${id}`)
         console.log('delete complete')
       }catch(error){
-        console.log('error', error)
+        console.log('deleting error todo', error)
       }
     },
 
