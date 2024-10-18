@@ -1,6 +1,6 @@
 # todolist
 
-This template should help get you started developing with Vue 3 in Vite.
+learning Vue + mock api
 
 ## Recommended IDE Setup
 
