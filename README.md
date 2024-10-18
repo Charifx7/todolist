@@ -1,6 +1,6 @@
 # todolist
 
-learning Vue + mock api
+learning Vue + tailwind + mock api
 
 ## Recommended IDE Setup
 
